@@ -4,7 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  // El repositorio es un "project site", así que la app se sirve bajo /antoniocaravantess/
+  base: '/antoniocaravantess/',
   plugins: [
     react(),
     VitePWA({
@@ -18,8 +19,8 @@ export default defineConfig({
         background_color: '#0b1020',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
+        start_url: '/antoniocaravantess/',
+        scope: '/antoniocaravantess/',
         lang: 'es',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
