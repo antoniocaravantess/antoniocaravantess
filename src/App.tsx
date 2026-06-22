@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { useDB } from './store/db'
-import { ensureFx } from './store/fx'
+import { ensureFx, refreshFx } from './store/fx'
 import Dashboard from './pages/Dashboard'
 import Trading from './pages/Trading'
 import Goals from './pages/Goals'
@@ -30,6 +30,19 @@ export default function App() {
 
   useEffect(() => {
     ensureFx()
+    // Mantener el tipo de cambio fresco: al volver a la app y al reconectar.
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') ensureFx()
+    }
+    const onOnline = () => refreshFx()
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('focus', onVisible)
+    window.addEventListener('online', onOnline)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('focus', onVisible)
+      window.removeEventListener('online', onOnline)
+    }
   }, [])
 
   return (
