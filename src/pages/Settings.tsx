@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { exportData, importData, resetData, update, useDB } from '../store/db'
 import { Field, PageHead, Segmented } from '../components/ui'
 
-const CURRENCIES = ['EUR', 'USD', 'GBP', 'MXN', 'ARS', 'COP', 'CLP', 'PEN', 'BRL', 'CHF']
+const CURRENCIES = ['GTQ', 'USD', 'EUR', 'MXN', 'GBP', 'ARS', 'COP', 'CLP', 'PEN', 'BRL', 'CHF']
 
 export default function Settings() {
   const db = useDB()
