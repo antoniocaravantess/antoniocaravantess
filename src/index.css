@@ -10,9 +10,10 @@
   --text: #eef1f8;
   --muted: #98a1bd;
   --faint: #6b7494;
-  --primary: #5b8cff;
-  --primary-2: #8b5cf6;
-  --grad: linear-gradient(135deg, #5b8cff, #8b5cf6);
+  --primary: #e6c573;
+  --primary-2: #c9971f;
+  --grad: var(--gold-grad);
+  --on-grad: #1a1206; /* texto oscuro sobre dorado */
   --green: #34d399;
   --red: #f87171;
   --amber: #fbbf24;
@@ -37,6 +38,7 @@
   --text: #0f1830;
   --muted: #56607c;
   --faint: #8a93ad;
+  --primary: #9a6f0f; /* dorado profundo legible sobre fondo claro */
   --shadow: 0 10px 24px rgba(20, 30, 60, 0.12);
 }
 
@@ -248,7 +250,7 @@ a {
 .btn.primary {
   background: var(--grad);
   border: none;
-  color: white;
+  color: var(--on-grad);
 }
 .btn.ghost {
   background: transparent;
@@ -282,11 +284,11 @@ a {
   border-radius: 50%;
   border: none;
   background: var(--grad);
-  color: white;
+  color: var(--on-grad);
   font-size: 28px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
-  box-shadow: 0 8px 24px rgba(91, 140, 255, 0.45);
+  box-shadow: 0 8px 24px rgba(201, 151, 31, 0.45);
   z-index: 40;
   display: flex;
   align-items: center;
@@ -362,7 +364,7 @@ textarea.input {
 }
 .segment button.on.grad {
   background: var(--grad);
-  color: white;
+  color: var(--on-grad);
 }
 
 .chips {
