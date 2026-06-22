@@ -126,7 +126,7 @@ export default function Trading() {
         </div>
         <div className="muted" style={{ fontSize: 11, marginTop: 6 }}>
           {rate != null
-            ? `1 ${cur} = ${formatMoney(rate, mainCur)}${fx.date ? ` · ${fx.date}` : ''}`
+            ? `1 ${cur} = ${formatMoney(rate, mainCur)}${fx.source ? ` · ${fx.source}` : ''}${fx.date ? ` ${fx.date}` : ''}`
             : fx.status === 'loading'
               ? 'Obteniendo tipo de cambio…'
               : 'Tipo de cambio no disponible (sin conexión)'}
