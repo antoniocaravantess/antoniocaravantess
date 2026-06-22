@@ -122,15 +122,6 @@ export default function Settings() {
         {msg && <p className="center mt" style={{ fontSize: 13, color: 'var(--green)' }}>{msg}</p>}
       </div>
 
-      <div className="section-title">Instalar en el móvil</div>
-      <div className="card">
-        <p className="muted" style={{ marginTop: 0, fontSize: 13.5, lineHeight: 1.5 }}>
-          <strong style={{ color: 'var(--text)' }}>iPhone:</strong> abre esta web en Safari, pulsa el botón <em>Compartir</em> y elige <em>«Añadir a pantalla de inicio»</em>.<br />
-          <strong style={{ color: 'var(--text)' }}>Android:</strong> ábrela en Chrome, menú <em>⋮</em> y <em>«Instalar app»</em>.
-        </p>
-        <p className="muted" style={{ fontSize: 13.5 }}>Una vez instalada se abre a pantalla completa y funciona sin conexión, como una app normal.</p>
-      </div>
-
       <button className="btn ghost block" style={{ marginTop: 18 }} onClick={() => navigate('/')}>← Volver al inicio</button>
     </div>
   )

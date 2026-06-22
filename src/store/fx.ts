@@ -21,14 +21,6 @@ const MARKET_SOURCES = [
   'https://latest.currency-api.pages.dev/v1/currencies/usd.json',
 ]
 
-// Web service oficial del Banco de Guatemala (tipo de cambio de referencia del día).
-const BANGUAT_WS = 'https://www.banguat.gob.gt/variables/ws/TipoCambio.asmx/TipoCambioDia'
-// Proxies CORS para poder consultar Banguat desde el navegador.
-const PROXIES = [
-  (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-  (u: string) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
-]
-
 function load(): FxState {
   try {
     const raw = localStorage.getItem(KEY)
@@ -66,33 +58,21 @@ async function fetchMarket(): Promise<{ rates: Record<string, number>; date: str
   return null
 }
 
-function parseBanguat(text: string): { rate: number; date: string | null } | null {
+// El tipo oficial de Banguat se publica como archivo en el propio sitio
+// (lo genera a diario una acción de GitHub), así que se lee desde el mismo
+// origen y de forma fiable, sin proxies ni problemas de CORS.
+async function fetchBanguat(): Promise<{ rate: number; date: string | null } | null> {
   try {
-    const xml = new DOMParser().parseFromString(text, 'text/xml')
-    const ref = xml.getElementsByTagName('referencia')[0] || xml.getElementsByTagNameNS('*', 'referencia')[0]
-    const fecha = xml.getElementsByTagName('fecha')[0] || xml.getElementsByTagNameNS('*', 'fecha')[0]
-    if (!ref || !ref.textContent) return null
-    const rate = parseFloat(ref.textContent.trim().replace(',', '.'))
-    if (!isFinite(rate) || rate <= 0) return null
-    return { rate, date: fecha?.textContent?.trim() || null }
+    const url = `${import.meta.env.BASE_URL}banguat.json`
+    const res = await fetch(url, { cache: 'no-cache' })
+    if (!res.ok) return null
+    const j = await res.json()
+    const rate = Number(j.referencia)
+    if (!Number.isFinite(rate) || rate <= 0) return null
+    return { rate, date: j.fecha || null }
   } catch {
     return null
   }
-}
-
-async function fetchBanguat(): Promise<{ rate: number; date: string | null } | null> {
-  for (const proxy of PROXIES) {
-    try {
-      const res = await fetch(proxy(BANGUAT_WS))
-      if (!res.ok) continue
-      const text = await res.text()
-      const parsed = parseBanguat(text)
-      if (parsed) return parsed
-    } catch {
-      /* probar siguiente proxy */
-    }
-  }
-  return null
 }
 
 async function refresh() {

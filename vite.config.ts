@@ -43,12 +43,22 @@ export default defineConfig({
             },
           },
           {
-            // API de tipo de cambio (Banguat vía proxy + cotización de mercado de respaldo)
-            urlPattern: /^https:\/\/(cdn\.jsdelivr\.net|latest\.currency-api\.pages\.dev|api\.allorigins\.win|corsproxy\.io|www\.banguat\.gob\.gt)\/.*/i,
+            // Cotización de mercado (respaldo, otras monedas)
+            urlPattern: /^https:\/\/(cdn\.jsdelivr\.net|latest\.currency-api\.pages\.dev)\/.*/i,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'fx-rates',
               expiration: { maxEntries: 8, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // Tipo de cambio oficial de Banguat publicado en el propio sitio
+            urlPattern: /banguat\.json$/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'banguat',
+              expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 2 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
