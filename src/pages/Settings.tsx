@@ -15,6 +15,9 @@ export default function Settings() {
   const fx = useFx()
   const tradingCur = db.profile.tradingCurrency || 'USD'
   const rate = rateOf(fx, tradingCur, db.profile.currency)
+  const updatedAt = fx.fetchedAt
+    ? new Date(fx.fetchedAt).toLocaleString('es-GT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+    : null
 
   function setProfile(p: Partial<typeof db.profile>) {
     update((d) => Object.assign(d.profile, p))
@@ -82,7 +85,7 @@ export default function Settings() {
           {tradingCur === db.profile.currency
             ? 'La moneda de trading y la principal son la misma; no se hace conversión.'
             : rate != null
-              ? `Tipo de cambio actual: 1 ${tradingCur} = ${formatMoney(rate, db.profile.currency)}${fx.date ? ` (${fx.date})` : ''}. Se actualiza solo.`
+              ? `Tipo de cambio de mercado: 1 ${tradingCur} = ${formatMoney(rate, db.profile.currency)}${fx.date ? ` · mercado del ${fx.date}` : ''}${updatedAt ? ` · actualizado ${updatedAt}` : ''}. Se actualiza cada vez que abres la app.`
               : fx.status === 'loading'
                 ? 'Obteniendo el tipo de cambio…'
                 : 'No se pudo obtener el tipo de cambio (revisa tu conexión).'}

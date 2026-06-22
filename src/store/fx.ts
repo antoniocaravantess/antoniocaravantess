@@ -10,7 +10,7 @@ export interface FxState {
 }
 
 const KEY = 'mi-vida:fx'
-const MAX_AGE = 6 * 60 * 60 * 1000 // refrescar como mucho cada 6 horas
+const MAX_AGE = 30 * 60 * 1000 // refrescar como mucho cada 30 minutos
 
 // API gratuita, sin clave y con CORS (con respaldo).
 const SOURCES = [
