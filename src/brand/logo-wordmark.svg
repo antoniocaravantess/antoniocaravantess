@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+<defs>
+<linearGradient id="gold" x1="0" y1="0" x2="0.3" y2="1">
+<stop offset="0" stop-color="#fbe7b0"></stop><stop offset="0.38" stop-color="#e6c573"></stop><stop offset="1" stop-color="#c9971f"></stop></linearGradient></defs>
+<text x="360" y="150" text-anchor="middle" font-family="SairaC" font-weight="500" font-size="62" letter-spacing="30" fill="url(#gold)" style="font-stretch:75%">MI</text>
+<text x="360" y="330" text-anchor="middle" font-family="SairaC" font-weight="800" font-size="210" letter-spacing="3" fill="url(#gold)" style="font-stretch:75%">VIDA</text>
+</svg>

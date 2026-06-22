@@ -97,7 +97,7 @@ a {
 
 .screen {
   flex: 1;
-  padding: calc(var(--safe-top) + 14px) 16px calc(var(--nav-h) + var(--safe-bottom) + 24px);
+  padding: 14px 16px calc(var(--nav-h) + var(--safe-bottom) + 24px);
   animation: fade 0.25s ease;
 }
 
@@ -600,4 +600,124 @@ textarea.input {
   aspect-ratio: 1;
   border-radius: 4px;
   background: var(--surface);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Marca dorada (Oro champán / Carbón)
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  --gold-1: #fbe7b0;
+  --gold-2: #e6c573;
+  --gold-3: #c9971f;
+  --gold-grad: linear-gradient(160deg, #fbe7b0 0%, #e6c573 38%, #c9971f 100%);
+  --carbon-grad: linear-gradient(165deg, #16161c, #0a0a0d 70%);
+  --carbon-glow: radial-gradient(120% 90% at 50% 30%, rgba(201, 151, 31, 0.18), transparent 55%);
+}
+
+/* Texto con relleno dorado */
+.gold-text {
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Logotipo wordmark */
+.brand-logo {
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  display: inline-block;
+}
+.brand-logo b {
+  font-weight: 800;
+}
+
+/* Barra superior */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--safe-top) + 10px) 16px 10px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar__settings {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: var(--card-2);
+  color: var(--muted);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Splash de entrada */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--carbon-glow), var(--carbon-grad);
+  animation: mvSplash 1.7s ease forwards;
+}
+.splash-mark {
+  text-align: center;
+  animation: mvRise 0.8s ease both;
+}
+.splash-mark .mi {
+  display: block;
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: 0.55em;
+  padding-left: 0.55em;
+  margin-bottom: 2px;
+}
+.splash-mark .vida {
+  display: block;
+  font-weight: 800;
+  font-size: 104px;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+}
+@keyframes mvSplash {
+  0%,
+  70% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes mvRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash {
+    animation-duration: 1.2s;
+  }
+  .splash-mark {
+    animation: none;
+  }
 }
