@@ -27,7 +27,7 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = db.settings.theme
     const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', db.settings.theme === 'light' ? '#f4f6fb' : '#0b1020')
+    if (meta) meta.setAttribute('content', db.settings.theme === 'light' ? '#f6f5f1' : '#0a0a0d')
   }, [db.settings.theme])
 
   useEffect(() => {
