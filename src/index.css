@@ -1,15 +1,14 @@
 :root {
-  --bg: #0b1020;
-  --bg-grad: radial-gradient(1200px 600px at 70% -10%, #1b2550 0%, transparent 55%),
-    radial-gradient(900px 500px at -10% 0%, #2a1c4d 0%, transparent 50%), #0b1020;
-  --surface: #141a2e;
-  --card: #161d33;
-  --card-2: #1c2542;
+  --bg: #0a0a0d;
+  --bg-grad: radial-gradient(130% 85% at 50% -8%, rgba(201, 151, 31, 0.1), transparent 55%), #0a0a0d;
+  --surface: #131316;
+  --card: #161619;
+  --card-2: #201f1d;
   --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --text: #eef1f8;
-  --muted: #98a1bd;
-  --faint: #6b7494;
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text: #f2efe8;
+  --muted: #9c98a0;
+  --faint: #6d6a73;
   --primary: #e6c573;
   --primary-2: #c9971f;
   --grad: var(--gold-grad);
@@ -28,8 +27,8 @@
 }
 
 [data-theme='light'] {
-  --bg: #f4f6fb;
-  --bg-grad: radial-gradient(1000px 500px at 80% -10%, #dfe7ff 0%, transparent 55%), #f4f6fb;
+  --bg: #f6f5f1;
+  --bg-grad: radial-gradient(1000px 500px at 80% -10%, #f3e7c4 0%, transparent 55%), #f6f5f1;
   --surface: #ffffff;
   --card: #ffffff;
   --card-2: #f1f4fb;
@@ -51,6 +50,7 @@ html,
 body,
 #root {
   height: 100%;
+  background: var(--bg);
 }
 
 body {
