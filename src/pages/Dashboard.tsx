@@ -57,6 +57,37 @@ export default function Dashboard() {
   const name = db.profile.name.trim()
   const dateLabel = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
 
+  const isEmpty =
+    db.tasks.length === 0 &&
+    db.goals.length === 0 &&
+    db.habits.length === 0 &&
+    db.trades.length === 0 &&
+    db.transactions.length === 0 &&
+    db.healthLogs.length === 0 &&
+    db.journal.length === 0
+
+  // Primer arranque: bienvenida centrada a pantalla completa (sin huecos vacíos).
+  if (isEmpty) {
+    return (
+      <div className="screen screen-center">
+        <div className="center" style={{ maxWidth: 340 }}>
+          <div style={{ fontSize: 56 }}>🚀</div>
+          <h1 style={{ fontSize: 26, fontWeight: 800, margin: '12px 0 6px' }}>
+            {greeting()}{name ? `, ${name.split(' ')[0]}` : ''}
+          </h1>
+          <p className="muted" style={{ marginTop: 0, fontSize: 15.5, lineHeight: 1.5 }}>
+            Bienvenido a <strong className="gold-text">Mi Vida</strong>. Empieza creando una meta, un hábito o registrando tu primera operación.
+          </p>
+          <div className="flex" style={{ gap: 10, justifyContent: 'center', marginTop: 20, flexWrap: 'wrap' }}>
+            <Link to="/metas" className="btn primary">🎯 Crear meta</Link>
+            <Link to="/tareas" className="btn">📝 Tarea</Link>
+            <Link to="/trading" className="btn">📈 Trading</Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="screen">
       <div className="page-head">

@@ -102,6 +102,13 @@ a {
   padding: 14px 16px calc(var(--nav-h) + var(--safe-bottom) + 24px);
   animation: fade 0.25s ease;
 }
+.screen-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
 @keyframes fade {
   from {
