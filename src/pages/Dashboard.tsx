@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDB, update } from '../store/db'
 import { goalProgress } from './Goals'
 import { Progress } from '../components/ui'
+import { convert, useFx } from '../store/fx'
 import { formatMoney, monthKey, todayISO, uid } from '../lib/util'
 
 function greeting(): string {
@@ -16,6 +17,8 @@ function greeting(): string {
 export default function Dashboard() {
   const db = useDB()
   const cur = db.profile.currency
+  const tradingCur = db.profile.tradingCurrency || 'USD'
+  const fx = useFx()
   const today = todayISO()
   const thisMonth = monthKey(today)
 
@@ -58,7 +61,7 @@ export default function Dashboard() {
     <div className="screen">
       <div className="page-head">
         <div>
-          <h1>{greeting()}{name ? `, ${name.split(' ')[0]}` : ''} 👋</h1>
+          <h1>{greeting()}{name ? `, ${name.split(' ')[0]}` : ''}</h1>
           <div className="sub" style={{ textTransform: 'capitalize' }}>{dateLabel}</div>
         </div>
       </div>
@@ -71,7 +74,13 @@ export default function Dashboard() {
         </Link>
         <Link to="/trading" className="stat" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className="label">📈 Trading del mes</div>
-          <div className={`value sm ${monthPnl >= 0 ? 'pos' : 'neg'}`}>{monthPnl >= 0 ? '+' : '−'}{formatMoney(Math.abs(monthPnl), cur)}</div>
+          <div className={`value sm ${monthPnl >= 0 ? 'pos' : 'neg'}`}>{monthPnl >= 0 ? '+' : '−'}{formatMoney(Math.abs(monthPnl), tradingCur)}</div>
+          {(() => {
+            const m = convert(fx, monthPnl, tradingCur, cur)
+            return m == null ? null : (
+              <div className="muted" style={{ fontSize: 11, marginTop: 2 }}>≈ {monthPnl >= 0 ? '+' : '−'}{formatMoney(Math.abs(m), cur)}</div>
+            )
+          })()}
         </Link>
       </div>
 

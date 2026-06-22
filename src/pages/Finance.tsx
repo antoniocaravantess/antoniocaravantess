@@ -3,7 +3,7 @@ import { useDB, update } from '../store/db'
 import type { Transaction, TxType } from '../types'
 import { BarChart, Donut } from '../components/charts'
 import { Empty, Fab, Field, PageHead, Segmented, Sheet, Stat } from '../components/ui'
-import { formatDate, formatMoney, monthKey, monthLabel, todayISO, uid } from '../lib/util'
+import { formatDate, formatMoney, formatNumber, monthKey, monthLabel, todayISO, uid } from '../lib/util'
 
 const PALETTE = ['#5b8cff', '#34d399', '#fbbf24', '#f472b6', '#22d3ee', '#8b5cf6', '#f87171', '#a3e635', '#fb923c']
 const EXPENSE_CATS = ['Comida', 'Hogar', 'Transporte', 'Ocio', 'Salud', 'Compras', 'Suscripciones', 'Otros']
@@ -113,7 +113,7 @@ export default function Finance() {
       {byCat.length > 0 && (
         <div className="card mt">
           <div className="section-title" style={{ marginTop: 0 }}>Gastos por categoría</div>
-          <Donut data={byCat} centerValue={formatMoney(expense, cur).replace(/[^\d.,€$]/g, '').slice(0, 7)} centerLabel="gastado" />
+          <Donut data={byCat} centerValue={formatNumber(expense, 0)} centerLabel={`gastado (${cur})`} />
         </div>
       )}
 

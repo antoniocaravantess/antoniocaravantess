@@ -4,12 +4,21 @@ import type { Trade, TradeDirection } from '../types'
 import { LineChart } from '../components/charts'
 import { Empty, Fab, Field, PageHead, Segmented, Sheet, Stat } from '../components/ui'
 import { formatDate, formatMoney, formatNumber, monthKey, todayISO, uid } from '../lib/util'
+import { convert, rateOf, useFx } from '../store/fx'
 
 type Period = 'mes' | 'todo'
 
 export default function Trading() {
   const db = useDB()
-  const cur = db.profile.currency
+  const cur = db.profile.tradingCurrency || 'USD'
+  const mainCur = db.profile.currency || 'GTQ'
+  const fx = useFx()
+  const rate = rateOf(fx, cur, mainCur)
+  // muestra "≈ Q…" con el equivalente en la moneda principal
+  const toMain = (amount: number) => {
+    const v = convert(fx, amount, cur, mainCur)
+    return v == null ? null : formatMoney(v, mainCur)
+  }
   const [period, setPeriod] = useState<Period>('todo')
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<Trade | null>(null)
@@ -107,8 +116,20 @@ export default function Trading() {
         <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: '-0.02em', margin: '4px 0 2px' }} className={stats.pnl >= 0 ? 'pos' : 'neg'}>
           {stats.pnl >= 0 ? '+' : '−'}{formatMoney(Math.abs(stats.pnl), cur)}
         </div>
+        {toMain(stats.pnl) && (
+          <div className="muted" style={{ fontSize: 14, marginBottom: 2 }}>
+            ≈ {stats.pnl >= 0 ? '+' : '−'}{toMain(Math.abs(stats.pnl))}
+          </div>
+        )}
         <div className="muted" style={{ fontSize: 12 }}>
           {stats.n} operacion{stats.n === 1 ? '' : 'es'} · {stats.wins}G / {stats.losses}P
+        </div>
+        <div className="muted" style={{ fontSize: 11, marginTop: 6 }}>
+          {rate != null
+            ? `1 ${cur} = ${formatMoney(rate, mainCur)}${fx.date ? ` · ${fx.date}` : ''}`
+            : fx.status === 'loading'
+              ? 'Obteniendo tipo de cambio…'
+              : 'Tipo de cambio no disponible (sin conexión)'}
         </div>
       </div>
 
@@ -131,6 +152,11 @@ export default function Trading() {
             <LineChart data={equity} color={equity[equity.length - 1] >= equity[0] ? 'var(--green)' : 'var(--red)'} height={150} />
           )}
         </div>
+        {allByDate.length > 0 && toMain(equity[equity.length - 1]) && (
+          <div className="muted center" style={{ fontSize: 12, marginTop: 8 }}>
+            ≈ {toMain(equity[equity.length - 1])} al cambio actual
+          </div>
+        )}
       </div>
 
       <div className="section-title">Operaciones</div>
