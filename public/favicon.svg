@@ -1,10 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#4f7cff"/><stop offset="1" stop-color="#8b5cf6"/>
-  </linearGradient></defs>
-  <rect width="512" height="512" rx="112" fill="url(#g)"/>
-  <polyline points="133,338 215,256 287,297 379,164" fill="none" stroke="#fff"
-    stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-  <polyline points="379,164 317,164 379,226" fill="none" stroke="#fff"
-    stroke-width="26" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,0)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<defs><linearGradient id="gold" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#fbe7b0"></stop><stop offset="0.38" stop-color="#e6c573"></stop><stop offset="1" stop-color="#c9971f"></stop></linearGradient><linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#16161c"></stop><stop offset="1" stop-color="#0a0a0d"></stop></linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0.1" r="0.7"><stop offset="0" stop-color="#c9971f" stop-opacity="0.18"></stop><stop offset="0.6" stop-color="#c9971f" stop-opacity="0"></stop></radialGradient></defs>
+<rect width="64" height="64" rx="15" fill="url(#bg)"></rect>
+<rect width="64" height="64" rx="15" fill="url(#glow)"></rect>
+<text x="32" y="45" text-anchor="middle" font-family="'Arial Narrow', Arial, sans-serif" font-weight="800" font-size="38" fill="url(#gold)" style="font-stretch:75%">MV</text></svg>

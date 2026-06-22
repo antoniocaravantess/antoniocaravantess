@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { useDB } from './store/db'
 import { ensureFx, refreshFx } from './store/fx'
+import { BrandSplash, TopBar } from './brand/Brand'
 import Dashboard from './pages/Dashboard'
 import Trading from './pages/Trading'
 import Goals from './pages/Goals'
@@ -21,6 +22,7 @@ const NAV = [
 
 export default function App() {
   const db = useDB()
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.documentElement.dataset.theme = db.settings.theme
@@ -47,6 +49,9 @@ export default function App() {
 
   return (
     <div className="app">
+      <BrandSplash />
+      <TopBar onSettings={() => navigate('/ajustes')} />
+
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/metas" element={<Goals />} />
