@@ -53,8 +53,13 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  /* Bahnschrift SemiBold Condensed cuando esté disponible (Windows); en el resto
+     de dispositivos se usa Saira Condensed, muy parecida (DIN condensada). */
+  font-family: 'Bahnschrift SemiBold Condensed', 'Bahnschrift', 'DIN Condensed',
+    'Saira Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  font-stretch: 75%;
+  font-weight: 600;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;

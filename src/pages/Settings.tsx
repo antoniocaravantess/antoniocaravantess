@@ -85,7 +85,7 @@ export default function Settings() {
           {tradingCur === db.profile.currency
             ? 'La moneda de trading y la principal son la misma; no se hace conversión.'
             : rate != null
-              ? `Tipo de cambio de mercado: 1 ${tradingCur} = ${formatMoney(rate, db.profile.currency)}${fx.date ? ` · mercado del ${fx.date}` : ''}${updatedAt ? ` · actualizado ${updatedAt}` : ''}. Se actualiza cada vez que abres la app.`
+              ? `Tipo de cambio${fx.source ? ` (${fx.source})` : ''}: 1 ${tradingCur} = ${formatMoney(rate, db.profile.currency)}${fx.date ? ` · ${fx.date}` : ''}${updatedAt ? ` · sync ${updatedAt}` : ''}. Se actualiza al abrir la app.`
               : fx.status === 'loading'
                 ? 'Obteniendo el tipo de cambio…'
                 : 'No se pudo obtener el tipo de cambio (revisa tu conexión).'}
