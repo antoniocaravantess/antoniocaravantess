@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { useDB } from './store/db'
+import { ensureFx } from './store/fx'
 import Dashboard from './pages/Dashboard'
 import Trading from './pages/Trading'
 import Goals from './pages/Goals'
@@ -26,6 +27,10 @@ export default function App() {
     const meta = document.querySelector('meta[name="theme-color"]')
     if (meta) meta.setAttribute('content', db.settings.theme === 'light' ? '#f4f6fb' : '#0b1020')
   }, [db.settings.theme])
+
+  useEffect(() => {
+    ensureFx()
+  }, [])
 
   return (
     <div className="app">

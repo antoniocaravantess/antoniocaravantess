@@ -3,8 +3,9 @@ export type ID = string
 
 export interface Profile {
   name: string
-  currency: string // p.ej. 'EUR', 'USD', 'MXN'
-  startingCapital: number // capital inicial para la curva de trading
+  currency: string // moneda principal (p.ej. 'GTQ')
+  tradingCurrency: string // moneda de las operaciones de trading (p.ej. 'USD')
+  startingCapital: number // capital inicial para la curva de trading (en tradingCurrency)
 }
 
 export type ThemeName = 'dark' | 'light'

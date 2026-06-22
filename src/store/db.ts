@@ -7,7 +7,7 @@ const VERSION = 1
 function defaultDB(): Database {
   return {
     version: VERSION,
-    profile: { name: '', currency: 'EUR', startingCapital: 0 },
+    profile: { name: '', currency: 'GTQ', tradingCurrency: 'USD', startingCapital: 0 },
     settings: { theme: 'dark' },
     trades: [],
     goals: [],

@@ -72,15 +72,20 @@ export function relativeDay(iso: string): string {
 }
 
 // ---------- Números y dinero ----------
-export function formatMoney(amount: number, currency = 'EUR'): string {
+export function formatMoney(amount: number, currency = 'GTQ'): string {
   try {
-    return new Intl.NumberFormat('es-ES', {
+    return new Intl.NumberFormat('es-GT', {
       style: 'currency',
       currency,
+      currencyDisplay: 'narrowSymbol',
       maximumFractionDigits: 2,
     }).format(amount)
   } catch {
-    return `${amount.toFixed(2)} ${currency}`
+    try {
+      return new Intl.NumberFormat('es', { style: 'currency', currency }).format(amount)
+    } catch {
+      return `${amount.toFixed(2)} ${currency}`
+    }
   }
 }
 

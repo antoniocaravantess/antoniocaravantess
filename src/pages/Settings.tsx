@@ -1,15 +1,20 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { exportData, importData, resetData, update, useDB } from '../store/db'
+import { rateOf, refreshFx, useFx } from '../store/fx'
 import { Field, PageHead, Segmented } from '../components/ui'
+import { formatMoney } from '../lib/util'
 
-const CURRENCIES = ['GTQ', 'USD', 'EUR', 'MXN', 'GBP', 'ARS', 'COP', 'CLP', 'PEN', 'BRL', 'CHF']
+const CURRENCIES = ['GTQ', 'USD', 'EUR', 'MXN', 'HNL', 'NIO', 'CRC', 'GBP', 'ARS', 'COP', 'CLP', 'PEN', 'BRL', 'CHF']
 
 export default function Settings() {
   const db = useDB()
   const navigate = useNavigate()
   const fileRef = useRef<HTMLInputElement>(null)
   const [msg, setMsg] = useState('')
+  const fx = useFx()
+  const tradingCur = db.profile.tradingCurrency || 'USD'
+  const rate = rateOf(fx, tradingCur, db.profile.currency)
 
   function setProfile(p: Partial<typeof db.profile>) {
     update((d) => Object.assign(d.profile, p))
@@ -55,17 +60,35 @@ export default function Settings() {
           <input className="input" value={db.profile.name} onChange={(e) => setProfile({ name: e.target.value })} placeholder="¿Cómo te llamas?" />
         </Field>
         <div className="row">
-          <Field label="Moneda">
+          <Field label="Moneda principal">
             <select className="select" value={db.profile.currency} onChange={(e) => setProfile({ currency: e.target.value })}>
               {CURRENCIES.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </Field>
-          <Field label="Capital inicial (trading)">
-            <input className="input" type="number" inputMode="decimal" value={db.profile.startingCapital || ''} onChange={(e) => setProfile({ startingCapital: Number(e.target.value) || 0 })} placeholder="0" />
+          <Field label="Moneda de trading">
+            <select className="select" value={tradingCur} onChange={(e) => setProfile({ tradingCurrency: e.target.value })}>
+              {CURRENCIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
           </Field>
         </div>
+        <Field label={`Capital inicial de trading (${tradingCur})`}>
+          <input className="input" type="number" inputMode="decimal" value={db.profile.startingCapital || ''} onChange={(e) => setProfile({ startingCapital: Number(e.target.value) || 0 })} placeholder="0" />
+        </Field>
+        <p className="muted" style={{ fontSize: 12.5, margin: '2px 0 0' }}>
+          {tradingCur === db.profile.currency
+            ? 'La moneda de trading y la principal son la misma; no se hace conversión.'
+            : rate != null
+              ? `Tipo de cambio actual: 1 ${tradingCur} = ${formatMoney(rate, db.profile.currency)}${fx.date ? ` (${fx.date})` : ''}. Se actualiza solo.`
+              : fx.status === 'loading'
+                ? 'Obteniendo el tipo de cambio…'
+                : 'No se pudo obtener el tipo de cambio (revisa tu conexión).'}
+          {' '}
+          <button className="btn ghost sm" style={{ padding: '2px 8px', marginLeft: 4 }} onClick={() => refreshFx()}>Actualizar</button>
+        </p>
       </div>
 
       <div className="section-title">Apariencia</div>
